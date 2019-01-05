@@ -14,10 +14,10 @@ var stackMethods = {
 
   pop: function() {
     if (this.stackSize > 0) {
-    this.stackSize--;
-    var deleted = this.storage[this.stackSize];
-    delete this.storage[this.stackSize];
-    return deleted;
+      this.stackSize--;
+      var deleted = this.storage[this.stackSize];
+      delete this.storage[this.stackSize];
+      return deleted;
     }
   },
 

@@ -13,7 +13,6 @@ var queueMethods = {
   enqueue: function(value) {
     this.storage[this.back++] = value;
     this.queueSize++;
-
   },
 
   dequeue: function() {
