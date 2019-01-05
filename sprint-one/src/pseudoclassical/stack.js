@@ -7,7 +7,7 @@ var Stack = function() {
 
 Stack.prototype.push = function(value) {
   this.storage[this.stackSize++] = value;
-}
+};
 
 Stack.prototype.pop = function() {
   if (this.stackSize > 0) {
@@ -15,8 +15,8 @@ Stack.prototype.pop = function() {
     delete this.storage[this.stackSize];
     return deleted;
   }
-}
+};
 
 Stack.prototype.size = function() {
   return this.stackSize;
-}
+};

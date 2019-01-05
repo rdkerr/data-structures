@@ -10,7 +10,7 @@ var Queue = function() {
 Queue.prototype.enqueue = function(value) {
   this.storage[this.back++] = value;
   this.queueSize++;
-}
+};
 
 Queue.prototype.dequeue = function() {
   if (this.queueSize > 0) {
@@ -19,9 +19,9 @@ Queue.prototype.dequeue = function() {
     this.queueSize--;
     return deleted;
   }
-}
+};
 
 Queue.prototype.size = function() {
   return this.queueSize;
-}
+};
 
