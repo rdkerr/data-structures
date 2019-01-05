@@ -22,4 +22,3 @@ class Stack {
     return this.stackSize;
   }
 }
-
