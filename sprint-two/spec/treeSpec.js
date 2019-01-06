@@ -53,6 +53,4 @@ describe('tree', function() {
   it('should return false for an empty tree', function() {
     expect(tree.contains(6)).to.equal(false);
   });
-
-
 });
