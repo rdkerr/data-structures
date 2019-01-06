@@ -32,7 +32,7 @@ describe('tree', function() {
     expect(tree.children[0].children[0].value).to.equal(6);
   });
 
-  it('should correctly detect nested children', function() {
+  it('should correctly detect nested children if present', function() {
     tree.addChild(5);
     tree.addChild(6);
     tree.children[0].addChild(7);
@@ -40,5 +40,19 @@ describe('tree', function() {
     expect(tree.contains(7)).to.equal(true);
     expect(tree.contains(8)).to.equal(true);
   });
+
+  it('should correctly detect nested children if not present', function() {
+    tree.addChild(5);
+    tree.addChild(6);
+    tree.children[0].addChild(7);
+    tree.children[1].addChild(8);
+    expect(tree.contains(9)).to.equal(false);
+    expect(tree.contains(1)).to.equal(false);
+  });
+
+  it('should return false for an empty tree', function() {
+    expect(tree.contains(6)).to.equal(false);
+  });
+
 
 });
