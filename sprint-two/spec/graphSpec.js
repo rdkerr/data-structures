@@ -101,7 +101,7 @@ describe('graph', function() {
   it('should be able to remove self edge', function() {
     graph.addNode(1);
     graph.addEdge(1, 1);
-    graph.removeEdge(1,1);
+    graph.removeEdge(1, 1);
     expect(graph.hasEdge(1, 1)).to.equal(false);
   });
 
