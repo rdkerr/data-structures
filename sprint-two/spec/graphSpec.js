@@ -39,7 +39,7 @@ describe('graph', function() {
   it('should remove edges between nodes', function() {
     graph.addNode(4);
     graph.addNode(5);
-    graph.addEdge(5, 4);
+    graph .addEdge(5, 4);
     expect(graph.hasEdge(4, 5)).to.equal(true);
     graph.removeEdge(5, 4);
     expect(graph.hasEdge(4, 5)).to.equal(false);
@@ -67,5 +67,51 @@ describe('graph', function() {
     expect(graph.hasEdge(1, 5)).to.equal(true);
     expect(graph.hasEdge(3, 5)).to.equal(true);
     expect(graph.hasEdge(5, 5)).to.equal(true);
+    var disconnectToFive = function(item) {
+      graph.removeEdge(item, 5);
+    };
+    graph.forEachNode(disconnectToFive);
+    expect(graph.hasEdge(2, 5)).to.equal(false);
+    expect(graph.hasEdge(1, 5)).to.equal(false);
+    expect(graph.hasEdge(3, 5)).to.equal(false);
+    expect(graph.hasEdge(5, 5)).to.equal(false);
+  });
+
+  it('should not maintain edges when added after removal', function() {
+    graph.addNode(4);
+    graph.addNode(5);
+    graph.addEdge(5, 4);
+    expect(graph.hasEdge(4, 5)).to.equal(true);
+    graph.removeNode(5);
+    graph.addNode(5);
+    expect(graph.hasEdge(4, 5)).to.equal(false);
+  });
+
+  it('should return false if not in the graph', function() {
+    graph.addNode(1);
+    expect(graph.contains(2)).to.equal(false);
+  });
+
+  it('should be able to connect to self', function() {
+    graph.addNode(1);
+    graph.addEdge(1, 1);
+    expect(graph.hasEdge(1, 1)).to.equal(true);
+  });
+
+  it('should be able to remove self edge', function() {
+    graph.addNode(1);
+    graph.addEdge(1, 1);
+    graph.removeEdge(1,1);
+    expect(graph.hasEdge(1, 1)).to.equal(false);
+  });
+
+  it('should not change graph if no edge exists', function() {
+    graph.addNode(1);
+    graph.addNode(2);
+    graph.addNode(3);
+    graph.addEdge(1, 2);
+    expect(graph.hasEdge(1, 3)).to.equal(false);
+    graph.removeEdge(1, 3);
+    expect(graph.hasEdge(1, 3)).to.equal(false);
   });
 });
