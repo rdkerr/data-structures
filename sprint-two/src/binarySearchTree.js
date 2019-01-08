@@ -53,6 +53,25 @@ class BinarySearchTree {
       this.depthFirstLog(func, current.right);
     }
   }
+
+  // O(N)
+  breadthFirstLog(func) {
+    var queue = [this];
+    while (queue.length > 0) {
+      console.log(queue);
+      var levelSize = queue.length;
+      for (var i = 0; i < levelSize; i++) {
+        var current = queue.shift();
+        if (current.left) {
+          queue.push(current.left);
+        }
+        if (current.right) {
+          queue.push(current.right);
+        }
+        current.value = func(current.value);
+      }
+    }
+  }
 }
 
 /*
