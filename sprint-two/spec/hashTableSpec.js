@@ -55,8 +55,26 @@ describe('hashTable', function() {
     expect(hashTable.retrieve('Bill')).to.equal(undefined);
   });
 
+  it('should update elements property', function() {
+    hashTable.insert('Bob', 'Loblaw');
+    hashTable.insert('Boba', 'Barker');
+    expect(hashTable._elements).to.equal(2);
+    hashTable.insert('Bobab', 'Loblaw');
+    hashTable.insert('Bobababa', 'Barker');
+    expect(hashTable._elements).to.equal(4);
+    hashTable.remove('Bob');
+    expect(hashTable._elements).to.equal(3);
+    hashTable.remove('Boba');
+    expect(hashTable._elements).to.equal(2);
+    hashTable.remove('Bobab');
+    expect(hashTable._elements).to.equal(1);
+    hashTable.remove('Bobababa');
+    expect(hashTable._elements).to.equal(0);
+  });
+
   // (Advanced! Remove the extra "x" when you want the following tests to run)
-  xit ('should double in size when needed', function() {
+  // Make sure the old keys are still present
+  it ('should double in size when needed', function() {
     _.each(people, function(person) {
       var firstName = person[0];
       var lastName = person[1];
@@ -66,7 +84,7 @@ describe('hashTable', function() {
     expect(hashTable._limit).to.equal(16);
   });
 
-  xit ('should halve in size when needed', function() {
+  it ('should halve in size when needed', function() {
     _.each(people, function(person) {
       var firstName = person[0];
       var lastName = person[1];
