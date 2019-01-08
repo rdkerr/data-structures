@@ -77,4 +77,23 @@ describe('tree', function() {
     expect(tree.contains(6)).to.equal(true);
   });
 
+  it('should apply callback to each element in tree', function() {
+    tree.addChild(5);
+    tree.addChild(6);
+    tree.children[0].addChild(7);
+    tree.children[0].addChild(8);
+    var double = function(element) {
+      return element * 2;
+    };
+    tree.traverse(double);
+    expect(tree.contains(5)).to.equal(false);
+    expect(tree.contains(6)).to.equal(false);
+    expect(tree.contains(7)).to.equal(false);
+    expect(tree.contains(8)).to.equal(false);
+    expect(tree.contains(10)).to.equal(true);
+    expect(tree.contains(12)).to.equal(true);
+    expect(tree.contains(14)).to.equal(true);
+    expect(tree.contains(16)).to.equal(true);
+  });
+
 });

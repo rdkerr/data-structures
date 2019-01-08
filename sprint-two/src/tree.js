@@ -8,6 +8,7 @@ var Tree = function(value) {
   newTree.addChild = treeMethods.addChild;
   newTree.contains = treeMethods.contains;
   newTree.removeFromParent = treeMethods.removeFromParent;
+  newTree.traverse = treeMethods.traverse;
   return newTree;
 };
 
@@ -48,5 +49,14 @@ treeMethods.removeFromParent = function(target) {
   }
 };
 
+// O(N)
+treeMethods.traverse = function(func) {
+  if (this.value !== undefined) {
+    this.value = func(this.value);
+  }
+  for (var i = 0; i < this.children.length; i ++) {
+    this.children[i].traverse(func);
+  }
+};
 /* Complexity: What is the time complexity of the above functions?
 */
