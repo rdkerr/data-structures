@@ -92,7 +92,7 @@ HashTable.prototype.grow = function() {
 };
 
 HashTable.prototype.shrink = function() {
-  console.log("SHRINK");
+  console.log('SHRINK');
   console.log(this._storage, this._limit);
   var array = [];
   for (var i = 0; i < this._limit; i ++) {
