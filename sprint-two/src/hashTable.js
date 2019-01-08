@@ -5,13 +5,12 @@ var HashTable = function() {
 };
 
 // O(1)
-HashTable.prototype.insert = function(k, v) {
+HashTable.prototype.insert = function(k, v, copy) {
   var index = getIndexBelowMaxForKey(k, this._limit);
   var bucket = this._storage.get(index);
   if (!bucket) {
     bucket = [[k, v]];
     this._elements++;
-    this.checkSpaceUsage();
   } else {
     var found = false;
     for (var i = 0; i < bucket.length; i ++) {
@@ -23,10 +22,12 @@ HashTable.prototype.insert = function(k, v) {
     if (!found) {
       bucket.push([k, v]);
       this._elements++;
-      this.checkSpaceUsage();
     }
   }
   this._storage.set(index, bucket);
+  if (!copy) {
+    this.checkSpaceUsage();
+  }
 };
 
 // O(1)
@@ -49,7 +50,6 @@ HashTable.prototype.remove = function(k) {
   if (bucket.length === 1) {
     this._storage.set(index, undefined);
     this._elements--;
-    this.checkSpaceUsage();
   } else {
     for (var i = 0; i < bucket.length; i ++) {
       var bucketIndex;
@@ -60,9 +60,9 @@ HashTable.prototype.remove = function(k) {
     if (bucketIndex !== undefined) {
       bucket.splice(bucketIndex, 1);
       this._elements--;
-      this.checkSpaceUsage();
     }
   }
+  this.checkSpaceUsage();
 };
 
 HashTable.prototype.checkSpaceUsage = function() {
@@ -78,36 +78,37 @@ HashTable.prototype.checkSpaceUsage = function() {
 HashTable.prototype.grow = function() {
   var array = [];
   for (var i = 0; i < this._limit; i ++) {
-    if (this._storage[i]) {
-      for (var j = 0; j < this._storage[i].length; j++) {
-        array.push(this._storage[i][j]);
+    var bucket = this._storage.get(i);
+    if (bucket) {
+      for (var j = 0; j < bucket.length; j++) {
+        array.push(bucket[j]);
       }
     }
   }
   this._limit *= 2;
   this._storage = LimitedArray(this._limit);
+  this._elements = 0;
   for (var i = 0; i < array.length; i ++) {
-    this.insert(array[i][0], array[i][1]);
+    this.insert(array[i][0], array[i][1], true);
   }
 };
 
 HashTable.prototype.shrink = function() {
-  console.log('SHRINK');
-  console.log(this._storage, this._limit);
   var array = [];
   for (var i = 0; i < this._limit; i ++) {
-    if (this._storage[i]) {
-      for (var j = 0; j < this._storage[i].length; j++) {
-        array.push(this._storage[i][j]);
+    var bucket = this._storage.get(i);
+    if (bucket) {
+      for (var j = 0; j < bucket.length; j++) {
+        array.push(bucket[j]);
       }
     }
   }
   this._limit /= 2;
   this._storage = LimitedArray(this._limit);
+  this._elements = 0;
   for (var i = 0; i < array.length; i ++) {
-    this.insert(array[i][0], array[i][1]);
+    this.insert(array[i][0], array[i][1], true);
   }
-
 };
 
 
