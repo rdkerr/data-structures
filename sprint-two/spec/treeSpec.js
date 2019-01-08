@@ -53,4 +53,28 @@ describe('tree', function() {
   it('should return false for an empty tree', function() {
     expect(tree.contains(6)).to.equal(false);
   });
+
+  it('should maintain parent property', function() {
+    expect(tree.parent).to.equal(null);
+    tree.addChild(5);
+    tree.children[0].addChild(7);
+    tree.children[0].addChild(8);
+    expect(tree.children[0].parent.value).to.equal(undefined);
+    expect(tree.children[0].children[0].parent.value).to.equal(5);
+    expect(tree.children[0].children[1].parent.value).to.equal(5);
+  });
+
+  it('should remove children and children of children when removed from parent', function() {
+    tree.addChild(5);
+    tree.addChild(6);
+    tree.children[0].addChild(7);
+    tree.children[0].addChild(8);
+    tree.children[0].removeFromParent(8);
+    expect(tree.contains(8)).to.equal(false);
+    tree.removeFromParent(5);
+    expect(tree.contains(5)).to.equal(false);
+    expect(tree.contains(7)).to.equal(false);
+    expect(tree.contains(6)).to.equal(true);
+  });
+
 });
