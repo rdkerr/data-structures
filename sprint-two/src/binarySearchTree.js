@@ -58,7 +58,6 @@ class BinarySearchTree {
   breadthFirstLog(func) {
     var queue = [this];
     while (queue.length > 0) {
-      console.log(queue);
       var levelSize = queue.length;
       for (var i = 0; i < levelSize; i++) {
         var current = queue.shift();
